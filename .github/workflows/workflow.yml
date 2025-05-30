@@ -1,0 +1,33 @@
+name: Déploiement sur GitHub Pages
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload des fichiers vers GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.' 
+
+      - name: Déployer
+        uses: actions/deploy-pages@v2
