@@ -10,6 +10,17 @@ jobs:
     runs-on: windows-latest  # Utiliser un runner Windows
 
     steps:
+
+      - name: Install rsync on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://github.com/stijnbrys/rsync-win/releases/download/v1.0.0/rsync-win.zip -OutFile rsync.zip
+          Expand-Archive rsync.zip -DestinationPath "$env:USERPROFILE\rsync"
+          $env:Path += ";$env:USERPROFILE\rsync"
+          Write-Output "✅ rsync installé dans $env:USERPROFILE\rsync"
+
+
       # Cloner le dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
