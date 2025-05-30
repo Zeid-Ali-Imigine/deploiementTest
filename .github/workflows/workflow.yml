@@ -24,6 +24,7 @@ jobs:
       # Vérifier la syntaxe CSS
       - name: Check CSS syntax
         run: |
+          npm install -g csslint
           choco install csslint
           csslint style.css
 
