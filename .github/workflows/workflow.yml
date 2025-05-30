@@ -25,7 +25,8 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: Upload des fichiers vers GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v2.
+        
         with:
           path: '.' 
 
