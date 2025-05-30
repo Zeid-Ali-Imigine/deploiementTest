@@ -2,7 +2,7 @@ name: Déploiement sur GitHub Pages
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 permissions:
   contents: read
