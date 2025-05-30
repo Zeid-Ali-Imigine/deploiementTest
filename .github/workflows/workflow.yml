@@ -1,34 +1,44 @@
-name: Deploy to GitHub Pages
+name: Déploiement sur GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    runs-on: windows-latest  # Utiliser un runner Windows
+    runs-on: windows-latest  # Utilisation de Windows
 
     steps:
-      # Cloner le dépôt
-      - name: Checkout repository
+      - name: Checkout du code
         uses: actions/checkout@v3
 
-      # Vérifier la syntaxe HTML
-      - name: Check HTML syntax
-        run: |
-          choco install htmlhint
-          htmlhint index.html
-
-      # Vérifier la syntaxe CSS
-      - name: Check CSS syntax
-        run: |
-          choco install csslint
-          csslint style.css
-
-      # Déployer sur GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
         with:
-          branch: gh-pages
-          folder: .  # Déploie la racine du dépôt
+          node-version: '14'  # Utilise la version de Node.js que tu préfères
+
+      - name: Installer htmlhint
+        run: npm install -g htmlhint  # Installation globale de htmlhint
+
+      - name: Vérifier HTML avec htmlhint
+        run: htmlhint index.html  # Vérifie ton fichier HTML
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload des fichiers vers GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+
+      - name: Déployer
+        uses: actions/deploy-pages@v2
