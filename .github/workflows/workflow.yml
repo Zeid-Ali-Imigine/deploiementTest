@@ -17,6 +17,7 @@ jobs:
       # Vérifier la syntaxe HTML
       - name: Check HTML syntax
         run: |
+          npm install -g htmlhint
           choco install htmlhint
           htmlhint index.html
 
