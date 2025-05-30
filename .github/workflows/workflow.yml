@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Utilisation de Windows
 
     steps:
       - name: Checkout du code
@@ -27,7 +27,7 @@ jobs:
       - name: Upload des fichiers vers GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: 'deploiementTest' 
+          path: '.'
 
       - name: Déployer
         uses: actions/deploy-pages@v2
