@@ -1,33 +1,34 @@
-name: Déploiement sur GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches:
+      - main
 
 jobs:
   deploy:
-    runs-on: windows-latest  # Utilisation de Windows
+    runs-on: windows-latest  # Utiliser un runner Windows
 
     steps:
-      - name: Checkout du code
+      # Cloner le dépôt
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Configurer GitHub Pages
-        uses: actions/configure-pages@v3
+      # Vérifier la syntaxe HTML
+      - name: Check HTML syntax
+        run: |
+          choco install htmlhint
+          htmlhint index.html
 
-      - name: Upload des fichiers vers GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+      # Vérifier la syntaxe CSS
+      - name: Check CSS syntax
+        run: |
+          choco install csslint
+          csslint style.css
+
+      # Déployer sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: '.'
-
-      - name: Déployer
-        uses: actions/deploy-pages@v2
+          branch: gh-pages
+          folder: .  # Déploie la racine du dépôt
