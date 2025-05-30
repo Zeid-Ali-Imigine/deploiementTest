@@ -27,7 +27,7 @@ jobs:
       - name: Upload des fichiers vers GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: '.' 
+          path: 'deploiementTest' 
 
       - name: Déployer
         uses: actions/deploy-pages@v2
